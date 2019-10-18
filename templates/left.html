@@ -4,40 +4,54 @@
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 
 	<script>
+	"use strict"
+	function test(){
+		alert('test')
+	}
+	
+	function on_ready(e){
+		$("#run").click( post_it )
+		$("#txt_html").on("keydown", shortcut)
+		$("#txt_js").on("keydown", shortcut)
+	}
+	
+	function shortcut(e){
+		if(e.keyCode == 13 && e.shiftKey){
+			post_it()
+			return false;
+		}
+	}
 	
 	function post_it(){
-		$.ajax({
+		var txt_html = $('#txt_html').val()
+		var txt_js = $('#txt_js').val()
+		var msg = {
 					url: '/change',
-					data: {'txt': $('#txt').val()},
+					data: {
+					'txt_html': txt_html,
+					'txt_js': txt_js,
+					},
 					type: 'POST',
 					success: function(response) {
-						console.log(response);
-						parent.right.location.reload();
+			
+					parent.window.location.reload(true)
 					},
 					error: function(error) {
 						console.log(error);
 					}
-		});
+		}
+		$.ajax(msg)
 	}
-	$(document).ready(function(){
-		
-			$("#run").click(post_it)	
-			
-			
-			$("#txt").on("keydown", function(e){
-				if(e.keyCode == 13 && e.shiftKey){
-					post_it()
-					return false;
-				}
-			})
-
-	});
+	
+	$(document).ready(on_ready)
 	</script>
 
 </head>
 
 <body>
-	<textarea id='txt' style="width:100%;" rows=40 spellcheck="false">{{text}}</textarea>
+	<button id="run">Run</button>
+	<textarea id='txt_html' style="width:100%;" rows=30 spellcheck="false">{{txt_html}}</textarea>
+	<textarea id='txt_js' style="width:100%;" rows=30 spellcheck="false">{{txt_js}}</textarea>
 
 </body>
 </html>	
