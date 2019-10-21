@@ -1,5 +1,5 @@
 from flask import Flask, request, render_template
-import pathlib, shutil, datetime
+import pathlib, shutil, datetime, time
 
 app = Flask(__name__, static_folder='',static_url_path='')
 
@@ -11,8 +11,8 @@ def root():
 		shutil.copy('templates/default_app.html','app.html')
 	if not pathlib.Path('app.js').exists():
 		shutil.copy('templates/default_app.js','app.js')
-
-	return render_template('index.html')
+	t = time.time()
+	return render_template('index.html', t=t)
 	
 @app.route('/left')	
 def left():

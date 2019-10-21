@@ -9,6 +9,35 @@
 		alert('test')
 	}
 	
+	function getCaretPosition(textBox) {
+
+		var caretPosition = 0;
+
+		// Firefox, Chrome, IE9~ Support
+		if(textBox.selectionStart || textBox.selectionStart == '0') {
+			caretPosition = textBox.selectionStart;
+		}
+
+    return caretPosition;
+}
+
+	function replaceTab(){
+			//https://djkeh.github.io/articles/Typing-tab-key-inside-textarea-using-javascript/
+			var textBox = 	document.activeElement
+
+			//var textBox = document.getElementById('txt_html')
+			var caretPosition = getCaretPosition(textBox)
+			
+			var preText = textBox.value.substring(0, caretPosition);
+			var postText = textBox.value.substring(caretPosition, textBox.value.length);
+
+			textBox.value = preText + "    " + postText;
+
+			textBox.focus();
+			textBox.setSelectionRange(caretPosition, caretPosition);
+	
+	}
+	
 	function on_ready(e){
 		$("#run").click( post_it )
 		$("#txt_html").on("keydown", shortcut)
@@ -18,8 +47,16 @@
 	function shortcut(e){
 		if(e.keyCode == 13 && e.shiftKey){
 			post_it()
-			return false;
+			return false
 		}
+		
+		//disable tab
+		if(e.keyCode == 9){
+			replaceTab()
+
+			return false
+		}
+
 	}
 	
 	function post_it(){
@@ -52,6 +89,5 @@
 	<button id="run">Run</button>
 	<textarea id='txt_html' style="width:100%;" rows=30 spellcheck="false">{{txt_html}}</textarea>
 	<textarea id='txt_js' style="width:100%;" rows=30 spellcheck="false">{{txt_js}}</textarea>
-
 </body>
 </html>	
