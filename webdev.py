@@ -12,7 +12,7 @@ def root():
 	if not pathlib.Path('app.js').exists():
 		shutil.copy('templates/default_app.js','app.js')
 	t = time.time()
-	return render_template('index.html', t=t)
+	return render_template('index.html')
 	
 @app.route('/left')	
 def left():
@@ -39,6 +39,20 @@ def change():
 	with open('app.js', 'w') as fout:
 		fout.write(txt_js)
 		
+	# make backup
+	print('Hallo')
+	backup_folder = pathlib.Path('./backup')
+	
+	if not backup_folder.is_dir():
+		backup_folder.mkdir()
+		
+	s = str(datetime.datetime.now())
+	s = s.replace(':', '')[:17]
+	stem = f'backup/app_{s}'
+	shutil.copy('app.html', f'{stem}.html')
+	shutil.copy('app.js', f'{stem}.js')
+
+	
 	return "file updated"
 	
 
