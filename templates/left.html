@@ -31,10 +31,12 @@
 			var preText = textBox.value.substring(0, caretPosition);
 			var postText = textBox.value.substring(caretPosition, textBox.value.length);
 
-			textBox.value = preText + "    " + postText;
+			var var_tab_replacement = "    "
+			textBox.value = preText + var_tab_replacement + postText
+			var len_replacement = var_tab_replacement.length
 
 			textBox.focus();
-			textBox.setSelectionRange(caretPosition, caretPosition);
+			textBox.setSelectionRange(caretPosition + len_replacement, caretPosition + len_replacement)
 	
 	}
 	
