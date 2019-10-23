@@ -29,31 +29,17 @@ def right():
 @app.route('/change',methods=['GET','POST'])
 def change():
 	""" update file using data from POST """
-	s = str(datetime.datetime.now())
-	txt_html = request.form['txt_html']
-	txt_js = request.form['txt_js']
-
-	with open('app.html', 'w') as fout:
-		fout.write(txt_html)
-		
-	with open('app.js', 'w') as fout:
-		fout.write(txt_js)
-		
-	# make backup
-	print('Hallo')
-	backup_folder = pathlib.Path('./backup')
+	file = request.form['file']
+	text = request.form['text']
 	
-	if not backup_folder.is_dir():
-		backup_folder.mkdir()
+	with open(file, 'w') as fout:
+		fout.write(text)
 		
-	s = str(datetime.datetime.now())
-	s = s.replace(':', '')[:17]
-	stem = f'backup/app_{s}'
-	shutil.copy('app.html', f'{stem}.html')
-	shutil.copy('app.js', f'{stem}.js')
-
 	
 	return "file updated"
+
+	
+	return str(request.form)
 	
 
 app.run(debug=True)
