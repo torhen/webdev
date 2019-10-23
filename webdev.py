@@ -35,11 +35,21 @@ def change():
 	with open(file, 'w') as fout:
 		fout.write(text)
 		
+	# Make backup on every change
+	backup_folder = pathlib.Path('./backup')
+	
+	if not backup_folder.is_dir():
+		backup_folder.mkdir()
+		
+	s = str(datetime.datetime.now())
+	s = s.replace(':', '')[:17]
+	dest = f'backup/{s}_{file}'
+	shutil.copy(file, dest)
+
+		
 	
 	return "file updated"
 
-	
-	return str(request.form)
 	
 
 app.run(debug=True)
