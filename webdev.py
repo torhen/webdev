@@ -10,6 +10,7 @@ def test():
 	s = '<html><h2>Apps</h2>\n'
 	for stem in l:
 		s = s + f"<a href='/{stem}'>{stem}</a><br>"
+	s = s + '<h3>Please swich off caching.</h3>'
 	s = s + '<html>\n'
 	return s
 
