@@ -1,0 +1,1 @@
+"use strict"var Lclass Map {   constructor(div_id){      this._map = L.map('mapid').setView([47.0, 8.5], 8)        this._tileLayer = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png')      this._tileLayer.addTo(this._map)   }}var map = new Map('mapid')
